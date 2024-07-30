@@ -27,15 +27,19 @@ body {
     border-radius: 10px;
 }
 
+.flex-container {
+    display: flex;
+    gap: 10px;
+}
+
 form input,
 form label,
 form button {
-    display: block;
-    width: 100%;
     margin-bottom: 10px;
 }
 
 form input {
+    margin: 0;
     font-size: 24px;
     height: 50px;
     padding: 0 20px;
@@ -53,18 +57,9 @@ form button {
     font-weight: 700;
     height: 50px;
     cursor: pointer;
-    margin-top: 30px;
+    border-radius: 5px;
 }
 
 form button:hover {
     background-color: var(--primary-color-darker);
-}
-
-.paused-timer-color {
-    color: red;
-}
-
-.timer {
-    font-size: 4em;
-    margin: 40px 0;
 }

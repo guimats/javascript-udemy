@@ -1,6 +1,6 @@
-function mostraHora () {
+function mostraHora() {
     const date = new Date()
-    
+
     return date.toLocaleTimeString('pt-BR', {
         hour12: false
     });
