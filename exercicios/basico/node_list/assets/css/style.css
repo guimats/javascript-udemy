@@ -27,29 +27,6 @@ body {
     border-radius: 10px;
 }
 
-.container>h1 {
-    margin-bottom: 0;
-}
-
-.container-flex {
-    display: flex;
-    justify-content: start;
-    gap: 100px;
-}
-
-.container-flex ul {
-    padding: 0;
-}
-
-.container-flex li {
-    padding: 3px 0;
-    list-style: none;
-}
-
-.titulo {
-    font-weight: bold;
-}
-
 form input,
 form label,
 form button {
