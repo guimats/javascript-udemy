@@ -14,6 +14,7 @@ function criaPessoa(nome, sobrenome, alt, pes) {
         set nomeCompleto(valor) {
             valor = valor.split(' ');
             this.nome = valor.shift();
+            this.sobrenome = valor.join(' ')
         },
 
         fala(assunto) {
@@ -32,8 +33,10 @@ function criaPessoa(nome, sobrenome, alt, pes) {
 
 const p1 = criaPessoa('Luiz', 'Otávio', 1.80, 80);
 console.log(p1.nomeCompleto)
+console.log(p1.nome)
 p1.nomeCompleto = 'Maria Oliveira Silva'
 console.log(p1.nomeCompleto)
+console.log(p1.nome)
 
 
 // const p2 = criaPessoa('Maria', 'Joaquina', 1.62, 42);
