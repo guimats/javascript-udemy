@@ -67,7 +67,6 @@ function calculoDigitoUm(arrayCpf) {
     let soma = 0;
 
     for (let digito of arrayCpf) {
-        console.log(soma, i)
         soma += (Number(digito) * i);
         i--;
     }
@@ -81,7 +80,6 @@ function calculoDigitoDois(arrayCpf) {
     let soma = 0;
 
     for (let digito of arrayCpf) {
-        console.log(soma, i)
         soma += (Number(digito) * i);
         i--;
     }
@@ -112,6 +110,6 @@ document.addEventListener('click', e => {
     const cpftext = document.querySelector('#cpftext').value;
 
     if (el.classList.contains('btn-validar')) {
-        cpfValido = validarCpf(cpftext);
+        validarCpf(cpftext);
     }
 });
