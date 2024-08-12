@@ -59,3 +59,19 @@ form button {
 form button:hover {
     background-color: var(--primary-color-darker);
 }
+
+.resultado {
+    padding: 20px 0 10px 0;
+}
+
+.cpf-valido {
+    color: rgb(110, 167, 26);
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+.cpf-invalido {
+    color: rgb(158, 21, 21);
+    font-weight: bolder;
+    font-size: 30px;
+}
