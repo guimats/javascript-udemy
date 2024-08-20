@@ -27,18 +27,21 @@ body {
     border-radius: 10px;
 }
 
-form input,
-form label,
-form button {
-    display: block;
-    width: 100%;
+.container>p {
+    font-size: 2.2em;
+    color: var(--primary-color);
+}
+
+div {
+    /* display: block;
+    width: 100%; */
     margin-bottom: 10px;
 }
 
 form input {
     font-size: 24px;
     height: 50px;
-    padding: 0 20px;
+    /* padding: 0 20px; */
 }
 
 form input:focus {
@@ -58,4 +61,23 @@ form button {
 
 form button:hover {
     background-color: var(--primary-color-darker);
+}
+
+#qtda-input {
+    width: 10%;
+    height: auto;
+}
+
+.checkbox {
+    width: auto;
+    height: auto;
+}
+
+.senha-resultado {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+    margin: 50px 0 30px;
+    max-width: 100%;
+    word-wrap: break-word;
 }
