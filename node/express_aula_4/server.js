@@ -10,6 +10,9 @@ mongoose.connect(process.env.CONNECTIONSTRING)
     })
     .catch(e => console.log(e));
 
+const session = require('express-session'); // mantém dados salvos em cookie
+const MongoStore = require('connect-mongo');
+const flash = require('connect-flash'); // mensagem que é exibida apenas uma vez
 
 
 const routes = require('./routes');
@@ -18,6 +21,21 @@ const { middlewareGlobal } = require('./src/middlewares/middleware');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, 'public')));
+
+
+const sessionOptions = session({
+    secret: 'SKDJHASDJKHASDJKsdsadas dasa dasd@@313',
+    store: MongoStore.create({ mongoUrl: process.env.CONNECTIONSTRING }),
+    receive: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true,
+    }
+});
+
+app.use(sessionOptions);
+app.use(flash());
 
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
@@ -32,4 +50,3 @@ app.on('pronto', () => {
         console.log('Servidor executando na porta 3000');
     });
 });
-
