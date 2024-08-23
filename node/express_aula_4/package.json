@@ -14,8 +14,10 @@
   "dependencies": {
     "core-js": "^0.4.2",
     "css-loader": "^7.1.2",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "mongoose": "^8.5.3",
     "regenerator-runtime": "^0.14.1",
     "style-loader": "^4.0.0"
   },
