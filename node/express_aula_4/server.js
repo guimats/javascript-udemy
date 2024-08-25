@@ -9,17 +9,19 @@ mongoose.connect(process.env.CONNECTIONSTRING)
         app.emit('pronto');
     })
     .catch(e => console.log(e));
-
 const session = require('express-session'); // mantém dados salvos em cookie
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash'); // mensagem que é exibida apenas uma vez
-
-
-const routes = require('./routes');
+const routes = require('./routes'); // rotas da aplicação
 const path = require('path');
-const { middlewareGlobal } = require('./src/middlewares/middleware');
+const helmet = require('helmet');
+const csrf = require('csurf');
+const { middlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
 
-app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+
+app.use(express.urlencoded({ extended: true })); // permite postar forms para dentro da aplicação
+app.use(express.json()); // permite postar json para dentro da aplicação
 app.use(express.static(path.resolve(__dirname, 'public')));
 
 
@@ -40,8 +42,12 @@ app.use(flash());
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
+app.use(csrf());
+
 // Nossos próprios middlewares
 app.use(middlewareGlobal);
+app.use(checkCsrfError);
+app.use(csrfMiddleware);
 app.use(routes);
 
 app.on('pronto', () => {
