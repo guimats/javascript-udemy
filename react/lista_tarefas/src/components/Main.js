@@ -1,29 +1,44 @@
 import React, {Component} from "react";
+
+import Form from './Form';
+import Tarefas from './Tarefas';
+
 import './Main.css';
-
-// To use react icons: npm i react-icons
-
-// Form - icons
-import { FaPlus } from 'react-icons/fa'
-
-// Tarefas - icons
-import { FaEdit } from 'react-icons/fa'
-import { FaWindowClose } from 'react-icons/fa'
 
 export default class Main extends Component {
 
 state = {
   novaTarefa: '',
-  tarefas: [
-  ]
+  tarefas: [],
+  index: -1
 };
+
+// carregando as tarefas do localStorage ao carregar a pagina (Mount)
+componentDidMount() {
+  const tarefas = JSON.parse(localStorage.getItem('tarefas'));
+
+  if (!tarefas) return
+
+  this.setState({ tarefas });
+}
+
+// salvando as tarefas assim que uma nova é adicionada/removida/editada
+componentDidUpdate(prevProps, prevState) {
+  const { tarefas } = this.state;
+
+  // se houver não houver alteração nas tarefas, retorna
+  if (tarefas === prevState.tarefas) return;
+
+  // se houver alteração, salva no localStorage
+  localStorage.setItem('tarefas', JSON.stringify(tarefas));
+}
 
 // evento de enviar formulário
 handleSubmit = (e) => {
   e.preventDefault();
 
   // pegando as tarefas já cadastradas
-  const { tarefas } = this.state;
+  const { tarefas, index } = this.state;
   // pegando a tarefa digitada
   let { novaTarefa } = this.state;
   // eliminando espaços antes e depois
@@ -35,11 +50,21 @@ handleSubmit = (e) => {
   // copiando as tarefas (não podemos editar os states diretamente)
   const novasTarefas = [...tarefas];
 
+  if (index === -1) { // criando tarefa
   // seta o state com as tarefas antigas e a nova no final
-  this.setState({
-    tarefas: [...novasTarefas, novaTarefa ]
-  })
+    this.setState({
+      tarefas: [...novasTarefas, novaTarefa ],
+      novaTarefa: '',
+    });
+  } else { //editando tarefa
+    novasTarefas[index] = novaTarefa;
 
+    this.setState({
+      tarefas: [...novasTarefas],
+      index: -1,
+      novaTarefa: ''
+    });
+  }
 };
 
 // evento de mudaça no input (digitação)
@@ -51,7 +76,11 @@ handleChange = (e) => {
 };
 
 handleEdit = (e, index) => {
-  console.log('edit', index);
+  const { tarefas } = this.state;
+  this.setState({
+    index,
+    novaTarefa: tarefas[index]
+  });
 };
 
 handleDelete = (e, index) => {
@@ -75,22 +104,17 @@ render() {
     <div className="main">
       <h1>Lista de tarefas</h1>
 
-      <form onSubmit={this.handleSubmit} action='#' className="form">
-        <input onChange={this.handleChange} type="text" value={novaTarefa}/>
-        <button type="submit"><FaPlus /></button>
-      </form>
+      <Form
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        novaTarefa={novaTarefa}
+      />
 
-      <ul className="tarefas">
-        {tarefas.map((tarefa, index) => (
-          <li key={tarefa}>
-            {tarefa}
-            <span>
-              <FaEdit onClick={(e) => this.handleEdit(e, index)} className="edit"/>
-              <FaWindowClose onClick={(e) => this.handleDelete(e, index)} className="delete"/>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <Tarefas
+        tarefas={tarefas}
+        handleEdit={this.handleEdit}
+        handleDelete={this.handleDelete}
+      />
     </div>
   );
 }
